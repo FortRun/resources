@@ -1,0 +1,11 @@
+! This is the parameter input file
+&params ! This is the start statement
+indx=2
+
+a = 4.5
+! This is a comment line
+
+word = "hi"
+array=1,3 ! The rest elements are defaults
+
+/ ! This is the end statement
