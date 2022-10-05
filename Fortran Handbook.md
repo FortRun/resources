@@ -78,7 +78,7 @@ Functional - pure functions
 
 <br>
 
-### *contiguous* and *do concurrent* - all that glitters is not gold
+### *contiguous* - all that glitters is not gold
 
 > The contiguous attribute is an attribute for pointer and assumed-shape dummy arrays. For an array pointer, it restricts its target to being contiguous. For an assumed-shape array, it specifies that if the corresponding actual argument is not contiguous, copy-in copy-out is used make the dummy argument contiguous.
 >
@@ -87,6 +87,10 @@ Functional - pure functions
 > -- Modern Fortran Explained, 2nd Edition. Michael Metcalf, John Reid, and Malcolm Cohen. Oxford University Press (2018)
 
 Do not use **contiguous** for dummy array arguments if the arrays are used only once. Then copy-in, copy-out overhead is not insignificant compared to array traversal time. 
+
+<br>
+
+### *do concurrent*
 
 ```fortran
 do concurrent (integer :: i=lbound:ubound:stride, j=lbound:ubound:stride, scalar_mask_expression)
@@ -108,6 +112,19 @@ end do
 > - as a crutch to compilers whose analysis capabilities are limited.
 >
 > -- Modern Fortran Explained, 2nd Edition. Michael Metcalf, John Reid, and Malcolm Cohen. Oxford University Press (2018)
+
+`ifort` does show marked performance improvement for do_concurrent over simple do loops. `gfortran` doesn't reap as much gain. Consult [the attached sample](./samples/do_concurrent/)
+
+The following are rules for variables with unspecified locality in DO CONCURRENT constructs:
+- A variable that is referenced in an iteration must be previously defined during that iteration, or it must not be defined or become undefined during any other iteration.
+A variable that is defined or becomes undefined by more than one iteration becomes undefined when the loop terminates.
+- An allocatable object that is allocated in more than one iteration must be subsequently deallocated during the same iteration in which it was allocated. An object that is allocated or deallocated in only one iteration must not be referenced, allocated, deallocated, defined, or become undefined in a different iteration.
+- A pointer that is referenced in an iteration must have been pointer associated previously during that iteration, or it must not have its pointer association changed during any iteration. A pointer that has its pointer association changed in more than one iteration has an association status of undefined when the construct terminates.
+- An input/output statement must not write data to a file record or position in one iteration and read from the same record or position in a different iteration.
+- Records written by output statements in the range of the loop to a sequential-access file appear in the file in an indeterminate order.
+
+The restrictions on referencing variables defined in an iteration of a DO CONCURRENT construct also apply to any procedure invoked within the loop. These restrictions ensure no interdependencies occur that might affect code optimizations.
+
 
 <br>
 
@@ -177,6 +194,7 @@ Use the `recursive function f(arg) result(res)` form: This is because within rec
 - Each scalar Derived Type is a **Structure**, comparable to **struct** in C and C++. Is an Object with SubObjects. Add type bound procedures (methods in C++ speak) and you have object oriented programming (OOP).
 - Derived Types can contain (as components) other derived types defined before. Recursive derived types can contain allocatable components of the type being defined. Allocatable components can also be of types to be defined later in the program unit.
 - Having **pointer** or **allocatable** components helps build linked lists.
+- Derived types also compactify data transfer to procedures, in the form of arguments that are of derived types. E.g. `call force(bead_i, bead_j)`, where `bead_i` and `bead_j` denote pointers to elements of a `bead` array, which is an object of derived type.
 
 <br>
 
@@ -236,10 +254,19 @@ Use the `recursive function f(arg) result(res)` form: This is because within rec
 
 <br>
 
-### stderr
+### stderr, logfile, *stop* and *error stop*
 
-- Use intrinsic module for `error_unit` and dump errors to stderr.
-- Exit with code is given by `stop <5 digit-code`. The `STOP` is written in stderr only.
+- Use intrinsic module `iso_fortran_env` for the named constant (parameter) `error_unit` and dump errors to stderr: `write(error_unit,*) ...`. It makes sense to consider stderr as the logfile.The `bash` driver can simply do `program 2> ${logfile}`.
+- In applications where several stop statements appear in various places in
+a complete program, it is possible to distinguish which of the stop statements has caused the termination by adding to each one a stop code consisting of a default integer or default character constant expression. E.g. Exit with code is given by `stop <5 digit-code`. The `STOP` and stop code are written in stderr only. Use standard Unix stop-code values, i.e. between 0-127.
+- The main difference between the `stop` and `error stop` statements is that
+the latter causes error termination (exit status non-zero) instead of normal termination. Other differences are:
+  - normal termination properly closes all files, waiting for any input/output operation in progress to complete, but error termination has no such requirement (this could cause data loss if files are still being written);
+  - in a coarray program with multiple images (Chapter 17, Metcalf), the entire computation is terminated, not just a single image (Section 17.14, Metcalf).
+
+Even though the normal and error termination exit code values are merely recommendations
+of the Fortran standard, it rarely makes sense to second-guess the processor’s choices here. For these reasons, we recommend the use of an informative message rather than an
+integer for both the `stop` and `error stop` statements.
 
 <br>
 
