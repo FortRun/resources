@@ -198,6 +198,27 @@ Use the `recursive function f(arg) result(res)` form: This is because within rec
 
 <br>
 
+### Automatic objects / arrays
+
+```fortran
+subroutine swap(a, b)
+real, dimension(:), intent(inout) :: a, b
+real, dimension(size(a)) :: work ! automatic array; size provides the size of an array
+work = a
+a = b
+b = work
+end subroutine swap
+```
+Automatic objects may also arise through varying character length:
+```fortran
+subroutine example(word1)
+character(len = *), intent(inout) :: word1
+character(len = len(word1)) :: word2
+```
+An automatic object is not a dummy argument and its declaration contains one or more values that are not known at compile time; that is, not a constant expression. An implementation is likely to bring them into existence when the procedure is called and destroy them on return, maintaining them on a *stack*.
+
+<br>
+
 ### Memory-leakage, heap, stack, pointers, targets, allocate, deallocate, nullify(), associated(), allocated()
 
 - Variables whose size are know at compile time are given allocated to stack. Same with procedure calls. Too much recursion would cause stack overflow. Too many variables, too large arrays would cause stack overflow. For too large arrays, and arrays whose size cannot be known at compile time, use dynamic allocatability - to be allocated heap.
