@@ -490,5 +490,12 @@ param2=valueB ! param2 would assume the latest value.
 !etc...
 
 / ! End of ff_params set.
-
 ```
+
+<br>
+
+### *Protected* attribute
+Just like `public` and `private`, `protected` provides further access control. This attribute does not affect the visibility of the variable, which must
+still be `public` to be visible, but confers the same protection against modification that `intent in` does for dummy arguments. Variables with the `protected` attribute may only be modified within the defining module, by module procedures e.g.. Outside the
+module they are not allowed to appear in a context in which they would be altered, such as
+on the left-hand side of an assignment statement.
