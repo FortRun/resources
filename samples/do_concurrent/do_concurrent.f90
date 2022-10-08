@@ -1,39 +1,45 @@
-! do_concurrent is way faster than simple do loop atleast for ifort
-! Without the -qopenmp flag, however, the locality information is ignored by ifort
-! However do_concurrent compiled with -qopenmp flag in ifort is as slow as simple do
-! To check, swap/toggle the do and do_concurrent below
+! `do concurrent` is way faster than simple `do` loop atleast for `ifort -qopenmp` but not for `ifort -parallel`
+! Without the -qopenmp / -parallel flag, however, the locality information is ignored by ifort
+! NOTE: PARALLELIZE THE OUTERMOST LOOP ONLY, THE INNER LOOP(S) MUST BE VECTORIZED
+! Test if `do` or `do concurrent` is faster by uncommenting below the desired one.
+! Compare different compilers with the present code to see which one uses multiple threads.
+! ifort -O3 -qopenmp <code>; ./a.out
+! ifort -O3 -parallel <code>; ./a.out
+! ifort -O3 <code>; ./a.out
+! gfortran -O3 <code>; ./a.out
+! gfortran -O3 -fopenmp; ./a.out
+
 
 real, dimension(10000) :: a=1.25, b=0.5
-real :: x, t1, t2
-integer :: count=0
-call cpu_time(t1)
-serial_loop : do count=1,1000000
-  ! Comment out either the do or do_concurrent below
-  ! do i=1,size(a)
-  do concurrent (i=1:size(a)) default(none) local (x) shared (a, b) ! This is a Fortran 2018 feature
-  ! do concurrent (i=1:size(a)) ! Does not contain any locality info: Fortran 2008 feature
+real :: x, t1, t2, cpu_secs, wclock_secs 
+integer :: count=0, wclock_t1, wclock_t2, wclock_rate, wclock_max
+
+call cpu_time(t1); call system_clock(wclock_t1, wclock_rate, wclock_max) ! Timestamp at the start
+
+! Comment out either the do or do_concurrent below
+! do i=1,size(a)
+! do concurrent (i=1:size(a)) default(none) local (x) shared (a, b) ! This is a Fortran 2018 feature
+do concurrent (i=1:size(a)) ! Does not contain any locality info: Fortran 2008 feature
+  serial_inner_loop : do count=1,1000000
     if (a(i)>0.0) then
       x = sqrt (a(i))
       a(i) = a(i) - x**2
     end if
     b(i) = b(i) - a(i)
-  end do
-end do serial_loop
-call cpu_time(t2)
-print*, "Spent:", t2-t1, "Secs"
+  end do serial_inner_loop
+end do
+
+call cpu_time(t2); call system_clock(wclock_t2, wclock_rate, wclock_max) ! Timestamp at the end
+
+! Performance Stats:
+cpu_secs = t2-t1
+wclock_secs = (wclock_t2-wclock_t1)/real(wclock_rate)
+print*, "Time spent (seconds) -"
+print*, "CPU:", cpu_secs
+print*, "Wallclock:", wclock_secs
+print*, "# Threads:", nint(cpu_secs/wclock_secs)
 end
 
 ! Results:
-! ifort with do_concurrent + locality info and without -qopenmp: 4.700233     Secs
-! ifort with do_concurrent + locality info and with -qopenmp: 12.44812     Secs
-! ifort with do_concurrent - locality info and without -qopenmp : 4.676138     Secs
-! ifort with do_concurrent - locality info and with -qopenmp : 8.218477     Secs
-! ifort with do : 12.34693     Secs
-! gfortran with do : 29.8000603     Secs
-! gfortran with do_concurrent (doesn't support locality yet) : 21.9149818     Secs
-
-! Lesson:
-! ifort is far better than gfortran
-! ifort implementation of the Fortran 2018 feature of do_concurrent with locality specs is not mature yet
-! However, the locality specs is recommended as it tells compiler everything it needs to know to parallelize efficiently
-
+! Only `ifort -qopenmp` with `do concurrent` uses all threads available (4 in my case).
+! `do concurrent` without locality info seems little faster
