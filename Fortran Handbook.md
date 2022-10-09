@@ -499,3 +499,18 @@ Just like `public` and `private`, `protected` provides further access control. T
 still be `public` to be visible, but confers the same protection against modification that `intent in` does for dummy arguments. Variables with the `protected` attribute may only be modified within the defining module, by module procedures e.g.. Outside the
 module they are not allowed to appear in a context in which they would be altered, such as
 on the left-hand side of an assignment statement.
+
+<br>
+
+### REAL(8) or REAL(16)/Double precision! Why store in REAL(8) and compute in REAL(16)!
+Taken from [this blog](http://www.ilikebigbits.com/2017_06_01_float_or_double.html) by Emil Ernerfeldt:
+> It can make a lot of sense to store your data with float but perform some or
+all computation on them with double... you will lose precision when you add a large and a small number together, and after summing a million numbers, you will probably be doing that. The rule of thumb is this: if you aggregate 10<sup>*N*</sup> values, you will lose N digits of precision.
+> If your floating points number has P digits (7 for float, 16 for double) of precision and your data
+has S digits of significance, you can have P-S digits of wiggle room, and can sum 10<sup>*P-S*</sup>values
+without precision problems.
+> Note that you do not need to store your numbers as double to get the benefit of doing
+calculations on them with increased precision. So,
+> - Don't use more precision than you need when storing data.
+> - If you sum a lot of data, switch to a higher precision accumulator
+
