@@ -195,6 +195,7 @@ Use the `recursive function f(arg) result(res)` form: This is because within rec
 - Derived Types can contain (as components) other derived types defined before. Recursive derived types can contain allocatable components of the type being defined. Allocatable components can also be of types to be defined later in the program unit.
 - Having **pointer** or **allocatable** components helps build linked lists.
 - Derived types also compactify data transfer to procedures, in the form of arguments that are of derived types. E.g. `call force(bead_i, bead_j)`, where `bead_i` and `bead_j` denote pointers to elements of a `bead` array, which is an object of derived type.
+- Derived types also compactify data transfer to and fro external files, i.e. I/O. For unformatted I/O, a value of derived type is treated as a whole and is not equivalent to a list of its ultimate components
 
 <br>
 
@@ -348,9 +349,13 @@ Use renaming `use module, only: alias => original, ...`: **Use case example**: Y
 
 ### Array constructor : set-roster or set-builder (implied-do)
 
-roster: `real :: a(10)=[elemen1, element2, ...]`
+roster: `a(10)=[elemen1, element2, ...]`
 
-builder: `real :: [(func(i),i=1,12)]`, or `[constant_independent_of_i, i=1,12]`
+builder: `[(func(i),i=1,12)]`, or `[constant_independent_of_i, i=1,12]`
+
+Elements may also be listed between the tokens `(/` and `/)` instead of `[` and `]`.
+
+If an array constructor begins with a type-spec :: (e.g. `real ::`), its type and type parameters are those specified by the type-spec. In this case, the array constructor values may have any type and type parameters (including character length) that are assignment-compatible with the specified type and type parameters, and the values are converted to that type by the usual assignment conversions.
 
 recursive type, pointer, allocatable, normal variable having desriptors
 
@@ -377,11 +382,34 @@ Hash-table libraries/implementations: https://fortranwiki.org/fortran/show/Hash+
 <br>
 
 ### I/O
-Asynchronous I/O, Stream, Binary, Direct access for database, Sequential otherwise. Use `newunit` specifier in open.
+Asynchronous I/O - applies to `read` and `write` statements and also to `open` statements. This is also an attribute. If a variable is a dummy argument or appears in an executable statement or a specification expression in a scoping unit and any statement of the scoping unit is executed while the variable is an *affector*, it must have the `asynchronous` attribute in the scoping unit. A variable is automatically given this attribute if it or a subobject of it is an item in the input/output list, namelist, or size= specifier of an asynchronous input/output statement.
 
-**List-directed I/O is denoted by *: `print*,`**. Unformatted I/O is different: `write(nunit, iostat=ios, err=110)`.
+Stream, Binary, Direct access for database, Sequential otherwise - applies to `open` statements. If the `form=` specifier is omitted, the default is `formatted` for sequential access and `unformatted` for direct or stream access.
 
+Use `newunit` specifier in `open`.
+
+**Formatted I/O:** `read character-constant, ...` (e.g. `print '(f10.3)', ...`) ; `read label-to-format-specifier, ...` (e.g. `print 100, ...`)
+
+**List-directed I/O:** `print *, ...`, `read *, ...` (\* means format is there but is machine dependent)
+
+**Other way to I/O:** `read (unit=, fmt=, err=, etc.)` or `write(unit=, fmt=, err=, etc.)`. `unit=` can be a character buffer, called an *internal file*. Note here `print` is not allowed, just like `write` was not allowed above.
+
+**Unformatted I/O:** When format is not mentioned at all, not even with \*. e.g. `write(nunit, iostat=ios, err=110)`. Also `open` the file with `form='unformatted'`. 
+
+**Namelist I/O:** See below
+
+Portable way to access the standard I/O file descriptors:
 `module iso_fortran_env, only: stdin => input_unit, stdout => output_unit, stderr => error_unit `
+
+**Advantage of using unformatted I/O**:
+- The internal representation of a value may differ from the external form, which is always a character string contained in an input or output record. The use of formatted I/O involves an overhead for the conversion between the two forms,
+- and often a round-off error too.
+- There is also the disadvantage that the external representation usually occupies more space on a storage medium than the internal representation.
+In unformatted I/O, the internal representation of a value is written exactly as it stands to the storage medium, and can be read back directly with neither round-off nor conversion overhead.
+
+*A value of derived type is treated as a whole for unformatted I/O and is equivalent to a list of its ultimate components for formatted or list-directed I/O.*
+
+Some forms of dependency are permitted in I/O. E.g. `read (*, *) n, a(1:n)` is allowed!!
 
 <br>
 
@@ -491,6 +519,7 @@ param2=valueB ! param2 would assume the latest value.
 
 / ! End of ff_params set.
 ```
+If an object is scalar and of intrinsic type, the equals sign must be followed by one value. If it is an array, the equals sign must be followed by a list of values for its elements in array element order. If it is of derived type and defined derived-type I/O (Section 11.6) is not in use, the equals sign must be followed by a list of values of intrinsic type corresponding to its ultimate components in array element order.
 
 <br>
 
