@@ -386,6 +386,8 @@ Asynchronous I/O - applies to `read` and `write` statements and also to `open` s
 
 Stream, Binary, Direct access for database, Sequential otherwise - applies to `open` statements. If the `form=` specifier is omitted, the default is `formatted` for sequential access and `unformatted` for direct or stream access.
 
+**Note:** Direct-access file is not portable if not prgrammed properly using `inquire(iolength=recl)`. See [this](https://stackoverflow.com/questions/32686720/reading-writing-fortran-direct-access-unformatted-files-with-different-compilers) thread.
+
 Use `newunit` specifier in `open`.
 
 **Formatted I/O:** `read character-constant, ...` (e.g. `print '(f10.3)', ...`) ; `read label-to-format-specifier, ...` (e.g. `print 100, ...`)
@@ -403,7 +405,7 @@ Portable way to access the standard I/O file descriptors:
 
 **Advantage of using unformatted I/O**:
 - The internal representation of a value may differ from the external form, which is always a character string contained in an input or output record. The use of formatted I/O involves an overhead for the conversion between the two forms,
-- and often a round-off error too.
+- And often a round-off error too.
 - There is also the disadvantage that the external representation usually occupies more space on a storage medium than the internal representation.
 In unformatted I/O, the internal representation of a value is written exactly as it stands to the storage medium, and can be read back directly with neither round-off nor conversion overhead.
 
@@ -417,11 +419,16 @@ Some forms of dependency are permitted in I/O. E.g. `read (*, *) n, a(1:n)` is a
 
 `inquire (file=fln, exist=ex)` by file to see if file exists before trying to open it. No trim(filename) needed for `file=` specifier. `inquire` returns UPPERCASE characters.
 
+`inquire (iolength=length) olist`: where `length` is a scalar integer variable of default kind. It stores the value of the length to be supplied to a `recl=` specifier of an `open` statement for a **direct-access** file to store `olist` as a record.
 <br>
 
 ### Excellent Progress Bars, Build with Python and Cmake inspiration
 
-https://github.com/szaghi/forbear
+Using fortran: https://github.com/szaghi/forbear
+
+Calling linux-tools from within fortran:
+- for progress bar and eta: `tail -n1 -f tmp.file | pv -p -e -l -s $(head -n1 tmp.file) > /dev/null`. For this to work, write the number of total newlines to be ultimately dumped in tmp.file in the first line.
+- https://github.com/SomajitDey/pbar
 
 <br>
 
