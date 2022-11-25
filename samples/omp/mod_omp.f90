@@ -1,4 +1,5 @@
 module mod_omp
+    use omp_lib
     implicit none
 
      contains
@@ -7,8 +8,8 @@ module mod_omp
         integer :: j
     
         !$omp do
-        workshare: do j=11,14
-            write(*,*) j
+        workshare: do j=100,99+omp_get_num_threads()
+            write(*,*) 'I am thread:  ',omp_get_thread_num(), ' executing workshare@subroutine step: ',j
         end do workshare
         !$omp end do
     end subroutine parallel
