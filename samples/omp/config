@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+export PATH="${PATH}":"${HOME}/.local/bin"
+command -v fortdepend || pip3 install --user fortdepend || { \
+    echo "Problem with installing/finding fortdepend. Make sure you are connected to the internet."; exit 1;}
+fortdepend --files src/* --ignore-modules omp_lib --overwrite --build build --output Makefile.dep && \
+echo "Dependencies generated successfully."
