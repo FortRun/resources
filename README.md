@@ -51,7 +51,9 @@ http://numerical.recipes/
     - Start with @ for no automatic `echo` of executing command
     - Each recipe line runs in own shell instance.
     - SHELL variable contains default shell
-    - [Variable assignement](https://www.gnu.org/software/make/manual/make.html#Setting) - VARIABLE : string]
+    - [Variable assignement](https://www.gnu.org/software/make/manual/make.html#Setting) - [VARIABLE := string](https://www.gnu.org/software/make/manual/make.html#Simple-Assignment) & [VARIABLE = string](https://www.gnu.org/software/make/manual/make.html#Recursive-Assignment)
+    - [Substitution reference](https://www.gnu.org/software/make/manual/make.html#Substitution-Refs)
+    - [Functions](https://www.gnu.org/software/make/manual/make.html#Functions) for [filenames](https://www.gnu.org/software/make/manual/make.html#File-Name-Functions)
 - [List of different tools](https://fortranwiki.org/fortran/show/Build+tools)
 
 ### Continuous Integration (CI)
