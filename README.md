@@ -36,13 +36,19 @@ http://numerical.recipes/
 - [Learn Make, Meson and CMake](https://fortran-lang.org/learn/building_programs/build_tools)
 - Makefiles
   - [Manual](https://www.gnu.org/software/make/manual/make.html)
+  - [Paul's Rules - Best Practices](https://make.mad-scientist.net/papers/rules-of-makefiles/)
+  - [Paul's Methods](https://make.mad-scientist.net/papers/)
   - [Tips](https://fortran-lang.org/learn/building_programs/build_tools#using-make-as-build-tool)
   - https://github.com/theicfire/makefiletutorial or https://makefiletutorial.com/
-  - Basics
+  - [Module dependency and Make](https://lagrange.mechse.illinois.edu/f90_mod_deps/)
+  - `fortdepend`: A Fortran Dependency Generator for easy inclusion in Makefiles [Docs](https://fortdepend.readthedocs.io/en/latest/) | [GitHub](https://github.com/ZedThree/fort_depend.py)
+  - See my own [`Makefile`](/samples/omp/Makefile) along with [`config`](/samples/omp/config) script for dependency generation using `fortdepend`.
+  - **Makefile Basics**
     - [Automatic variables $@, $<, $?, $^](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html)
     - [wildcard](https://www.gnu.org/software/make/manual/make.html#Wildcards)
     - [% pattern matching](https://www.gnu.org/software/make/manual/make.html#Static-Pattern)
     - [multiple targets in one rule](https://www.gnu.org/software/make/manual/make.html#Multiple-Targets)
+    - [multiple rules for one target](https://www.gnu.org/software/make/manual/make.html#Multiple-Rules)
     - $(wildcard *.something) - [wildcard pitfalls](https://www.gnu.org/software/make/manual/make.html#index-wildcard-pitfalls)
     - [Pattern rules](https://www.gnu.org/software/make/manual/make.html#Pattern-Rules)
     - [.PHONY](https://www.gnu.org/software/make/manual/make.html#Phony-Targets)
@@ -54,6 +60,7 @@ http://numerical.recipes/
     - [Variable assignement](https://www.gnu.org/software/make/manual/make.html#Setting) - [VARIABLE := string](https://www.gnu.org/software/make/manual/make.html#Simple-Assignment) & [VARIABLE = string](https://www.gnu.org/software/make/manual/make.html#Recursive-Assignment)
     - [Substitution reference](https://www.gnu.org/software/make/manual/make.html#Substitution-Refs)
     - [Functions](https://www.gnu.org/software/make/manual/make.html#Functions) for [filenames](https://www.gnu.org/software/make/manual/make.html#File-Name-Functions)
+    - [VPATH](https://www.gnu.org/software/make/manual/make.html#Directory-Search)
 - [List of different tools](https://fortranwiki.org/fortran/show/Build+tools)
 
 ### Continuous Integration (CI)
