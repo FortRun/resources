@@ -35,17 +35,23 @@ http://numerical.recipes/
 
 - [Learn Make, Meson and CMake](https://fortran-lang.org/learn/building_programs/build_tools)
 - Makefiles
+  - [Manual](https://www.gnu.org/software/make/manual/make.html)
   - [Tips](https://fortran-lang.org/learn/building_programs/build_tools#using-make-as-build-tool)
   - https://github.com/theicfire/makefiletutorial or https://makefiletutorial.com/
   - Basics
     - [Automatic variables $@, $<, $?, $^](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html)
-    - wildcard % pattern matching - multiple targets in one rule
-    - $(wildcard *.something) - wildcard pitfalls
+    - [wildcard](https://www.gnu.org/software/make/manual/make.html#Wildcards)
+    - [% pattern matching](https://www.gnu.org/software/make/manual/make.html#Static-Pattern)
+    - [multiple targets in one rule](https://www.gnu.org/software/make/manual/make.html#Multiple-Targets)
+    - $(wildcard *.something) - [wildcard pitfalls](https://www.gnu.org/software/make/manual/make.html#index-wildcard-pitfalls)
+    - [Pattern rules](https://www.gnu.org/software/make/manual/make.html#Pattern-Rules)
+    - [.PHONY](https://www.gnu.org/software/make/manual/make.html#Phony-Targets)
+    - [Order-only prerequisites](https://www.gnu.org/software/make/manual/make.html#Prerequisite-Types)
     - Rule - Target : Prerequisite ; Recipes
     - Start with @ for no automatic `echo` of executing command
     - Each recipe line runs in own shell instance.
     - SHELL variable contains default shell
-    - Variable assignement - VARIABLE : string
+    - [Variable assignement](https://www.gnu.org/software/make/manual/make.html#Setting) - VARIABLE : string]
 - [List of different tools](https://fortranwiki.org/fortran/show/Build+tools)
 
 ### Continuous Integration (CI)
