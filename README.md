@@ -31,8 +31,12 @@ http://numerical.recipes/
 - `ifort` and `ifx`. Now available without registration for [free](https://www.intel.com/content/www/us/en/developer/articles/news/free-intel-software-developer-tools.html). Here's a [guide to install on Ubuntu (Linux/WSL2)](https://gist.github.com/SomajitDey/aeb6eb4c8083185e06800e1ece4be1bd).
 - [Online](https://www.onlinegdb.com/)
 
+### Linting
+- [fortran-linter](https://github.com/cphyc/fortran-linter) | [fork](https://github.com/FortRun/fortran-linter)
+
 ### Build tools
 
+- **[A model Makefile that can be used everywhere with minimal modification](https://gist.github.com/SomajitDey/4462675881cc1340b76d45279764cc2f)**
 - [Learn Make, Meson and CMake](https://fortran-lang.org/learn/building_programs/build_tools)
 - Makefiles
   - [Manual](https://www.gnu.org/software/make/manual/make.html)
@@ -41,7 +45,7 @@ http://numerical.recipes/
   - [Tips](https://fortran-lang.org/learn/building_programs/build_tools#using-make-as-build-tool)
   - https://github.com/theicfire/makefiletutorial or https://makefiletutorial.com/
   - [Module dependency and Make](https://lagrange.mechse.illinois.edu/f90_mod_deps/)
-  - `fortdepend`: A Fortran Dependency Generator for easy inclusion in Makefiles [Docs](https://fortdepend.readthedocs.io/en/latest/) | [GitHub](https://github.com/ZedThree/fort_depend.py)
+  - `fortdepend`: A Fortran Dependency Generator for easy inclusion in Makefiles [Docs](https://fortdepend.readthedocs.io/en/latest/) | [GitHub](https://github.com/ZedThree/fort_depend.py) | [fork](https://github.com/FortRun/fortdepend)
   - See my own [`Makefile`](/samples/omp/Makefile) along with [`config`](/samples/omp/config) script for dependency generation using `fortdepend`.
   - **Makefile Basics**
     - [Automatic variables $@, $<, $?, $^](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html)
@@ -67,6 +71,7 @@ http://numerical.recipes/
 
 Auto-build remotely on every push to upstream with public build status Markdown badge
 
+- [GitHub Workflow/Actions](https://gist.github.com/SomajitDey/d14eb5dd7bcd79f3f14d1a7429b515af) - free for public repos
 - [Travis-CI](https://docs.travis-ci.com/user/status-images/)
 - Circle-CI (?)
 - Self-hosted (Heroku, AWS, Digital Ocean, exposed with IPNS-Link) triggered by GitHub webhooks
