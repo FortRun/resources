@@ -33,6 +33,10 @@ http://numerical.recipes/
 
 ### Linting
 - [fortran-linter](https://github.com/cphyc/fortran-linter) | [fork](https://github.com/FortRun/fortran-linter)
+- [fprettify](https://github.com/pseewald/fprettify) | [fork](https://github.com/FortRun/fprettify)
+- [flint](https://gitlab.com/cerfacs/flint) | [docs](https://www.atnf.csiro.au/computing/software/miriad/doc/flint.html) | [HOME](https://cerfacs.fr/coop/flint) | [a blog-article on why linting is important](https://cerfacs.fr/coop/scanninglargefortranhpccodes)
+- [Commercial static analysis tools](https://fortranwiki.org/fortran/show/Commercial+static+analysis+tools)
+
 
 ### Build tools
 
