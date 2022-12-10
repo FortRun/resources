@@ -32,11 +32,19 @@ http://numerical.recipes/
 - [Online](https://www.onlinegdb.com/)
 
 ### Linting
+
 - [fortran-linter](https://github.com/cphyc/fortran-linter) | [fork](https://github.com/FortRun/fortran-linter)
 - [fprettify](https://github.com/pseewald/fprettify) | [fork](https://github.com/FortRun/fprettify)
 - [flint](https://gitlab.com/cerfacs/flint) | [docs](https://www.atnf.csiro.au/computing/software/miriad/doc/flint.html) | [HOME](https://cerfacs.fr/coop/flint) | [a blog-article on why linting is important](https://cerfacs.fr/coop/scanninglargefortranhpccodes)
 - [Commercial static analysis tools](https://fortranwiki.org/fortran/show/Commercial+static+analysis+tools)
 
+### Bash completion
+
+A good fortran package needs `<TAB>` completion on the command-line. Learn how to write proper bash-completion scripts and where to install them for automatic loading by bash.
+- [Creating a bash completion script](https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial)
+- [Git's completion script](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
+- [Bash manual - programmable completion example](https://www.gnu.org/software/bash/manual/html_node/A-Programmable-Completion-Example.html#A-Programmable-Completion-Example)
+- [The Bash completeion project](https://github.com/scop/bash-completion/)
 
 ### Build tools
 
@@ -79,6 +87,16 @@ Auto-build remotely on every push to upstream with public build status Markdown 
 - [Travis-CI](https://docs.travis-ci.com/user/status-images/)
 - Circle-CI (?)
 - Self-hosted (Heroku, AWS, Digital Ocean, exposed with IPNS-Link) triggered by GitHub webhooks
+
+### Debugging and Segfaults
+
+- `ulimit -s unlimited`
+- [NASA doc](https://www.nas.nasa.gov/hecc/support/kb/common-causes-of-segmentation-faults-(segfaults)_524.html)
+- [ifort doc](https://www.intel.com/content/www/us/en/developer/articles/troubleshooting/determining-root-cause-of-sigsegv-or-sigbus-errors.html)
+
+### Profiling
+
+
 
 ### Containerization
 
