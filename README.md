@@ -19,6 +19,8 @@
   - [Parallel Programming in Fortran 95 using OpenMP](http://www.openmp.org/wp-content/uploads/F95_OpenMPv1_v2.pdf), a guide by M. Hermanns
   - [Quick Reference Card](https://www.openmp.org/wp-content/uploads/OpenMPRef-5.0-111802-web.pdf)
   - [Orphaned directives](https://wwwuser.gwdg.de/~parallel/intel_compiler_doc/f_ug2/par_prg.htm#orph) a great gift. See [samples](/samples/omp_orphaned_directive/)
+  - `reduction` clause supports array variables only for Fortran
+  - use compiler option `-auto` for ifort and `-fautomatic` for gfortran while using openmp
 - Coarrays - Language native parallelization - using OpenMPI underneath (both opencoarrays and intel-fortran-compiler)
 - OpenMPI - assembly language of parallelization.
 
@@ -31,6 +33,7 @@ http://numerical.recipes/
 - `gfortran` + [opencoarrays](http://www.opencoarrays.org/)
 - `ifort` and `ifx`. Now available without registration for [free](https://www.intel.com/content/www/us/en/developer/articles/news/free-intel-software-developer-tools.html). Here's a [guide to install on Ubuntu (Linux/WSL2)](https://gist.github.com/SomajitDey/aeb6eb4c8083185e06800e1ece4be1bd).
 - [Online](https://www.onlinegdb.com/)
+- for standard compiler options see `FF` in this [Makefile](https://gist.github.com/SomajitDey/4462675881cc1340b76d45279764cc2f)
 
 ### Linting
 
@@ -84,7 +87,7 @@ A good fortran package needs `<TAB>` completion on the command-line. Learn how t
 
 Auto-build remotely on every push to upstream with public build status Markdown badge
 
-- [GitHub Workflow/Actions](https://gist.github.com/SomajitDey/d14eb5dd7bcd79f3f14d1a7429b515af) - free for public repos
+- [GitHub Workflow/Actions - My Way](https://gist.github.com/SomajitDey/d14eb5dd7bcd79f3f14d1a7429b515af) - free for public repos
 - [Travis-CI](https://docs.travis-ci.com/user/status-images/)
 - Circle-CI (?)
 - Self-hosted (Heroku, AWS, Digital Ocean, exposed with IPNS-Link) triggered by GitHub webhooks
