@@ -8,10 +8,10 @@ all:
 
 test:
 	@echo 'testing gfortran build'
-	./gfortran_build_runme.exe | sort
+	./gfortran_build_runme.exe
 	@echo -e \\n'===================================='\\n
 	@echo 'testing ifort build'
-	./ifort_build_runme.exe | sort
+	./ifort_build_runme.exe
 
 clean:
 	rm -f *.mod *.exe
