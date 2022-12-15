@@ -20,7 +20,8 @@
   - [Quick Reference Card](https://www.openmp.org/wp-content/uploads/OpenMPRef-5.0-111802-web.pdf)
   - [Orphaned directives](https://wwwuser.gwdg.de/~parallel/intel_compiler_doc/f_ug2/par_prg.htm#orph) a great gift. See [samples](/samples/omp_orphaned_directive/)
   - `reduction` clause supports array variables only for Fortran
-  - use compiler option `-auto` for ifort and `-fautomatic` for gfortran while using openmp
+  - Use compiler option `-auto` for ifort and `-fautomatic` for gfortran while using openmp
+  - Look up `OMP_STACKSIZE`
 - Coarrays - Language native parallelization - using OpenMPI underneath (both opencoarrays and intel-fortran-compiler)
 - OpenMPI - assembly language of parallelization.
 
@@ -95,6 +96,7 @@ Auto-build remotely on every push to upstream with public build status Markdown 
 ### Debugging and Segfaults
 
 - `ulimit -s unlimited`
+- `export OMP_STACKSIZE=500m`
 - [NASA doc](https://www.nas.nasa.gov/hecc/support/kb/common-causes-of-segmentation-faults-(segfaults)_524.html)
 - [ifort doc](https://www.intel.com/content/www/us/en/developer/articles/troubleshooting/determining-root-cause-of-sigsegv-or-sigbus-errors.html)
 
