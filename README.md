@@ -18,6 +18,7 @@
   - **Using OpenMP Portable Shared Memory Parallel Programming**. Barbara Chapman et al., MIT Press, 2008
   - [Parallel Programming in Fortran 95 using OpenMP](http://www.openmp.org/wp-content/uploads/F95_OpenMPv1_v2.pdf), a guide by M. Hermanns
   - [Quick Reference Card](https://www.openmp.org/wp-content/uploads/OpenMPRef-5.0-111802-web.pdf)
+  - [Orphaned directives](https://wwwuser.gwdg.de/~parallel/intel_compiler_doc/f_ug2/par_prg.htm#orph) a great gift. See [samples](/samples/omp_orphaned_directive/)
 - Coarrays - Language native parallelization - using OpenMPI underneath (both opencoarrays and intel-fortran-compiler)
 - OpenMPI - assembly language of parallelization.
 
