@@ -46,6 +46,7 @@ http://numerical.recipes/
 ### Bash completion
 
 A good fortran package needs `<TAB>` completion on the command-line. Learn how to write proper bash-completion scripts and where to install them for automatic loading by bash.
+- [My own template](https://gist.github.com/SomajitDey/4462675881cc1340b76d45279764cc2f#file-completion-template)
 - [Creating a bash completion script](https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial)
 - [Git's completion script](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
 - [Bash manual - programmable completion example](https://www.gnu.org/software/bash/manual/html_node/A-Programmable-Completion-Example.html#A-Programmable-Completion-Example)
