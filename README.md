@@ -22,6 +22,7 @@
   - `reduction` clause supports array variables only for Fortran
   - Use compiler option `-auto` for ifort and `-fautomatic` for gfortran while using openmp
   - Look up `OMP_STACKSIZE`
+  - Note: Module variables are always shared unless declared as `threadprivate`! Threadprivate variables, if not declared in a module, must be given the `save` attribute during declaration.
 - Coarrays - Language native parallelization - using OpenMPI underneath (both opencoarrays and intel-fortran-compiler)
 - OpenMPI - assembly language of parallelization.
 
